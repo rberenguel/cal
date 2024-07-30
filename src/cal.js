@@ -11,6 +11,7 @@ const sketch = (s) => {
   const eventFontsize = 10;
 
   s.setup = () => {
+    s.pixelDensity(1)
     const canvas = s.createCanvas(400, 300);
     canvas.elt.addEventListener("click", e => {
       s.saveCanvas('calendar', 'jpg')
