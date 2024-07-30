@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="manifest" href="./manifest.json" />
+    <link rel="icon" type="image/png" href="./src/icon.png" />
+    <script src="src/p5.min.js"></script>
+    <script type="module" src="src/idb-keyval.js"></script>
+    <style>
+body {
+  background-color: #ada693;
+}
+#input {
+  white-space: pre-wrap;
+  font-family: monospace;  
+  height: auto;
+  min-height: 50px;
+  overflow-y: hidden;
+  font-size: 13pt;
+}
+select {
+  font-size: 14pt;
+}
+    </style>
+  </head>
+  <body>
+    <select id="month-length">
+      <option value="28">28</option>
+      <option value="29">29</option>
+      <option value="30">30</option>
+      <option value="31">31</option>
+    </select>
+    <select id="calendar-start">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+      <option value="6">6</option>
+      <option value="7">7</option>
+    </select>
+    <div contenteditable id="input">
+[
+  { day: -1, text: "Event" },
+  { day: 0, text: "Another" },
+  { day: 1, text: "More\nYet" },
+  { day: 20, text: "Yet" },
+]
+    </div>
+    <script type="module" src="src/cal.js"></script>
+  </body>
+</html>
+

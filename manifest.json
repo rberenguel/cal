@@ -1,0 +1,22 @@
+{
+  "short_name": "Cal",
+  "version": "0.1.0",
+  "name": "Cal",
+  "description": "Create calendar image for WaveShare's 4.2 NFC ePaper screen",
+  "icons": [
+    {
+      "src": "./src/icon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "./src/icon_512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#ada693",
+  "theme_color": "#204b56"
+}
