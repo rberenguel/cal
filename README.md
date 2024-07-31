@@ -1,6 +1,6 @@
 # cal
 
-![](./images/device.jpg)
+<img src="./images/device.jpg" width="400"></img>
 
 Quick PWA to create an image of a calendar to send to a WaveShare passive
 NFC ePaper screen (4.2 inches, 400x300 pixels).
@@ -12,7 +12,9 @@ Uses [p5js](https://p5js.org) for rendering and [idb-keyval](https://github.com/
 ## How it looks
 
 ### The UI of the web app
-![](./images/screenshot.png)
+
+<img src="./images/screenshot.png" width="400"></img>
+
 The UI is minimal and certainly could use some more polish, but should be functional.
 
 - The first selector (`28` to `31`) is for the month length.
@@ -27,7 +29,7 @@ The UI is minimal and certainly could use some more polish, but should be functi
 
 ### The resulting calendar
 
-![](./images/calendar.jpg)
+<img src="./images/calendar.jpg" width="400"></img>
 
 There are some hardcoded things you may want to tweak:
 - Font size for weekdays
@@ -38,6 +40,6 @@ I don't plan on adding customisation for these, if I wanted to change the font I
 
 ### How it looks on the device
 
-![](./images/device.jpg)
+<img src="./images/device.jpg" width="400"></img>
 
 This is the 4.2 B/W WaveShare passive ePaper, writable via NFC. Even though the generated image is exactly the pixel size of the device, you will need to tweak a bit the brightness/contrast in the WaveShare app.
