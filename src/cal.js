@@ -88,7 +88,7 @@ const sketch = (s) => {
 
   get("list-of-events").then(evs => {
     if(evs !== undefined){
-      if (typeof value === 'string') {
+      if (typeof evs === 'string') {
         events = eval(evs) // While migrating
       } else {
         events = evs;
