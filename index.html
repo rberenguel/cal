@@ -13,6 +13,23 @@ body {
   background-color: #ada693;
 }
 
+#wrapper {
+  margin: auto;
+  width: 80%;
+  margin-top: 3em;
+}
+
+#month-options {
+  text-align: center;
+  margin-bottom: 0.3em;
+}
+
+main {
+  transform: translate(0, 100%) scale(1.5);
+  transform-origin: 0;
+  position: fixed;
+}
+
 #inputs-holder {
   margin-bottom: 1em;
 }
@@ -22,18 +39,26 @@ input {
   font-size: 110%;
 }
 
-input.day {
-  width: 2em;
+.row {
+  display: flex; /* Use flexbox for easy alignment */
+  align-items: center; /* Vertically center items */
 }
 
-input.event {
-  width: 8em;
+input.day {
+  width: 2em;
+  margin-right: 5px; /* Add some spacing */
+}
+
+input.text {
+  flex-grow: 1; /* This will make it take up the remaining space */
 }
 
 .cross {
-  margin-left: 0.2em;
-  width: 1em;
   display: inline-block;
+  width: 1em;
+  text-align: center;
+  cursor: pointer;
+  margin-left: 5px; /* Add some spacing */
 }
 
 select {
@@ -42,22 +67,26 @@ select {
     </style>
   </head>
   <body>
-    <select id="month-length">
-      <option value="28">28</option>
-      <option value="29">29</option>
-      <option value="30">30</option>
-      <option value="31">31</option>
-    </select>
-    <select id="calendar-start">
-      <option value="1">1</option>
-      <option value="2">2</option>
-      <option value="3">3</option>
-      <option value="4">4</option>
-      <option value="5">5</option>
-      <option value="6">6</option>
-      <option value="7">7</option>
-    </select>
-    <div id="inputs-holder"></div>
+    <div id="wrapper">
+      <div id="month-options">
+        <select id="month-length">
+          <option value="28">28</option>
+          <option value="29">29</option>
+          <option value="30">30</option>
+          <option value="31">31</option>
+        </select>
+        <select id="calendar-start">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+        </select>
+      </div>
+      <div id="inputs-holder"></div>
+    </div>
     <script type="module" src="src/cal.js"></script>
   </body>
 </html>

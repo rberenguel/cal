@@ -14,7 +14,7 @@ const sketch = (s) => {
   ]
   ;
   const dayFontsize = 12;
-  const eventFontsize = 10;
+  const eventFontsize = 8;
 
   s.setup = () => {
     s.pixelDensity(1)
@@ -23,6 +23,8 @@ const sketch = (s) => {
       s.saveCanvas('calendar', 'jpg')
     })
     s.frameRate(1);
+    const main = document.querySelector("main")
+    document.querySelector("#wrapper").appendChild(main)
   }
 
   s.drawCalendar = (events) => {
@@ -62,7 +64,8 @@ const sketch = (s) => {
               s.fill(0, 0, 0);
               s.noStroke()
               s.textFont(monoid, eventFontsize)
-              s.text(event.text, x + cellWidth / 2, y + cellHeight * 1 / 4);
+              // This 0.15 is a very magic number with the current font size
+              s.text(event.text, x + cellWidth / 2, y + cellHeight * 0.15);
             }
           }
         } else {
@@ -71,7 +74,7 @@ const sketch = (s) => {
             if (event.day === dayCounter && outsideMonth) {
               s.noStroke()
               s.textFont(monoid, eventFontsize)
-              s.text(event.text, x + cellWidth / 2, y + cellHeight * 1 / 4);
+              s.text(event.text, x + cellWidth / 2, y + cellHeight * 0.25);
             }
           }
         }
@@ -87,6 +90,7 @@ const sketch = (s) => {
   const calendarStartDayDropdown = document.getElementById("calendar-start");
 
   get("list-of-events").then(evs => {
+    console.log(evs)
     if(evs !== undefined){
       if (typeof evs === 'string') {
         events = eval(evs) // While migrating
@@ -168,26 +172,37 @@ const sketch = (s) => {
   s.eventsToInputs = () => {
     let count = 0
     for(let event of events){
-      addRow(count, +event.day, event.text)
-      count++;
+      for(const text of event.text.split("\n")){
+        addRow(count, +event.day, text)
+        count++;
+      }
     }
   }
 
   s.inputsToEvents = () => {
     const rows = Array.from(document.querySelectorAll(".row"))
-    let events_ = []
+    let eventsMap = {}
     for(let row of rows){
-      let event_ = {}
       const day = row.querySelector(".day").value
       const text = row.querySelector(".event").value
       if(day !== undefined && day !== "" && !Number.isNaN(+day)){
-        event_.day = +day
-        event_.text= text
-        events_.push(event_)
+        if(eventsMap[+day] !== undefined){
+          eventsMap[+day] += `\n${text}`
+        } else {
+          eventsMap[+day] = text
+        }
       }
     }
-    set("list-of-events", events_)
+    let events_ = []
+    for(const day in eventsMap){
+      let event_ = {}
+      const text = eventsMap[day]
+      event_.day = +day
+      event_.text= text
+      events_.push(event_)
+    }
     events = events_
+    set("list-of-events", events_)
   }
 
   s.draw = () => {
