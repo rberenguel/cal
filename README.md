@@ -3,7 +3,7 @@
 <img src="./images/device.jpg" width="400"></img>
 
 Quick PWA to create an image of a calendar to send to a WaveShare passive
-NFC ePaper screen (4.2 inches, 400x300 pixels).
+NFC ePaper screen (4.2 inches, 400x300 pixels). To send it to the screen you need to use one of WaveShare's apps (for iOS or Android).
 
 This is browser only, requires no backend. You can add it as an "app" to your phone by adding it to your home screen.
 
