@@ -12,14 +12,30 @@
 body {
   background-color: #ada693;
 }
-#input {
-  white-space: pre-wrap;
-  font-family: monospace;  
-  height: auto;
-  min-height: 50px;
-  overflow-y: hidden;
+
+#inputs-holder {
+  margin-bottom: 1em;
+}
+
+input {
+  font-family: monospace;
   font-size: 110%;
 }
+
+input.day {
+  width: 2em;
+}
+
+input.event {
+  width: 8em;
+}
+
+.cross {
+  margin-left: 0.2em;
+  width: 1em;
+  display: inline-block;
+}
+
 select {
   font-size: 110%;
 }
@@ -41,14 +57,7 @@ select {
       <option value="6">6</option>
       <option value="7">7</option>
     </select>
-    <div contenteditable id="input">
-[
-  { day: -1, text: "Event" },
-  { day: 0, text: "Another" },
-  { day: 1, text: "More\nYet" },
-  { day: 20, text: "Yet" },
-]
-    </div>
+    <div id="inputs-holder"></div>
     <script type="module" src="src/cal.js"></script>
   </body>
 </html>

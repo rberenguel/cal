@@ -6,7 +6,13 @@ const sketch = (s) => {
   let canvasWidth = 400;
   let canvasHeight = 300;
   let monthLength;
-  let events;
+  let events = [
+    { day: -1, text: "Event" },
+    { day: 0, text: "Another" },
+    { day: 1, text: "More\nYet" },
+    { day: 20, text: "Yet" },
+  ]
+  ;
   const dayFontsize = 12;
   const eventFontsize = 10;
 
@@ -77,17 +83,23 @@ const sketch = (s) => {
     }
   }
 
-  const inputDiv = document.getElementById("input");
   const monthLengthDropdown = document.getElementById("month-length");
   const calendarStartDayDropdown = document.getElementById("calendar-start");
-  const jsonString = () => inputDiv.innerText;
-  
+
   get("list-of-events").then(evs => {
     if(evs !== undefined){
-      inputDiv.innerText = evs
+      if (typeof value === 'string') {
+        events = eval(evs) // While migrating
+      } else {
+        events = evs;
+      }
+      s.eventsToInputs();
+    } else {
+      s.eventsToInputs();
     }
+    addRow(events.length)
   })
-  
+
   get("calendar-start").then(cs => {
     if(cs !== undefined){
       calendarStartDayDropdown.value = cs
@@ -98,10 +110,6 @@ const sketch = (s) => {
     if(ml !== undefined){
       monthLengthDropdown.value = ml
     }
-  })
-
-  inputDiv.addEventListener("input", e => {
-    set("list-of-events", jsonString())
   })
 
   calendarStartDayDropdown.addEventListener("change", e => {
@@ -117,11 +125,75 @@ const sketch = (s) => {
     monoid = s.loadFont("src/Monoid-Retina.ttf")
   }
 
+  function addIfLast(e) {
+    console.log(e)
+    const row = e.target.closest(".row")
+    const id = row.id.replace("row-", "")
+    const sibling = row.nextElementSibling
+    console.log(sibling)
+    if(!sibling){
+      addRow(id+1)
+    }
+  }
+
+  function addRow(id, day="", text=""){
+    const holder = document.getElementById("inputs-holder")
+    const rowDiv = document.createElement("div")
+    rowDiv.id = `row-${id}` 
+    rowDiv.classList.add("row")
+    const dayInput = document.createElement("input")
+    dayInput.classList.add("day")
+    dayInput.type = "number"
+    dayInput.value = day
+    const eventInput = document.createElement("input")
+    eventInput.classList.add("event")
+    eventInput.value = text
+    dayInput.addEventListener("input", e => s.inputsToEvents())
+    eventInput.addEventListener("input", e => s.inputsToEvents())
+    eventInput.addEventListener("input", e => addIfLast(e));
+    const cross = document.createElement("div")
+    cross.innerText = "❌"
+    cross.classList.add("cross")
+    cross.addEventListener("click", e => {
+      const row = e.target.closest(".row");
+      row.parentNode.removeChild(row); 
+      s.inputsToEvents()
+    })
+    rowDiv.appendChild(dayInput)
+    rowDiv.appendChild(eventInput)
+    rowDiv.appendChild(cross)
+    holder.appendChild(rowDiv)
+  }
+
+  s.eventsToInputs = () => {
+    let count = 0
+    for(let event of events){
+      addRow(count, +event.day, event.text)
+      count++;
+    }
+  }
+
+  s.inputsToEvents = () => {
+    const rows = Array.from(document.querySelectorAll(".row"))
+    let events_ = []
+    for(let row of rows){
+      let event_ = {}
+      const day = row.querySelector(".day").value
+      const text = row.querySelector(".event").value
+      if(day !== undefined && day !== "" && !Number.isNaN(+day)){
+        event_.day = +day
+        event_.text= text
+        events_.push(event_)
+      }
+    }
+    set("list-of-events", events_)
+    events = events_
+  }
+
   s.draw = () => {
     try {
       monthLength = monthLengthDropdown.value;
       calendarStartDay = calendarStartDayDropdown.value;
-      events = eval(jsonString());
     } catch(err) {
       monthLength = 30;
       events = []
@@ -135,7 +207,7 @@ const sketch = (s) => {
     }
   }
 
-  }
+}
 
 p5.disableFriendlyErrors = true
 let p5sketch = new p5(sketch)
